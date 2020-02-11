@@ -50,7 +50,7 @@
     }
   </style>
   <script>
-    window.onload = function() {
+    document.addEventListener('DOMContentLoaded', function() {
 
       // получаем поле ввода и вспомогательный блок
       var 
@@ -58,7 +58,7 @@
         block = document.querySelector(".for_textarea");
 
         // при нажатии на клавишу
-        textarea.addEventListener("keyup", function() {
+        textarea.addEventListener("input", function() {
 
           // получаем значение поля ввода
           var val_text = textarea.value;
@@ -66,6 +66,8 @@
           // c помощью регулярных выражений заменм некоторые символы
           val_text = val_text.replace(/ /g, "&nbsp;");
           val_text = val_text.replace(/<|>/g, "_");
+          val_text = val_text.replace(/\n/g, "<br>");
+          val_text = val_text.replace(/\r/g, "<br>");
 
           // полученное выражение добавим в вспомогательный блок
           block.innerHTML = val_text;
@@ -76,7 +78,7 @@
           // задаем высоту для текстового поля
           textarea.style.height = height_textarea + "px";
         })
-    }
+    })
   </script>
 </head>
 <body>
