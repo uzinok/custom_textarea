@@ -1,92 +1,73 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    form {
-      width: 320px;
-      margin: 0 auto;
-
-      /* что бы спрятать вспомогательный блок */
-      position: relative;
+    body {
+      color: tomato;
     }
 
-    /* что бы текст растягивался одинаково и в текстовом поле и в вспомогательном блоке */
-    /* делаем одинаковые стили */
-    textarea,
-    .for_textarea {
-      display: block;
-      padding: 10px 20px;
-      margin: 0 0 20px;
-      width: 100%;
-      box-sizing: border-box;
-      height: 40px;
-      border-bottom: 1px solid #000;
-      background-color: transparent;
-      font-size: 20px;
-      line-height: 1;
-      word-break: break-all;
-      font-family: Arial, Helvetica, sans-serif;
-      transition: 0.3s;
-    }
+.textarea {
+  padding: 2px;
+  font-family: monospace;
+  color: fieldtext;
+  display: inline-block;
+  overflow-wrap: break-word;
+  background-color: field;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(133, 133, 133);
+  width: 12.616em;
+  min-height: 2.339em;
+}
 
-    /* убираем скролл внутри поля ввода */
-    textarea {
-      overflow: hidden;
-    }
+textarea {
+  max-width: 100%;
+  min-width: 170px;
+  max-height: 100px;
+}
 
-    /* прячем вспомогательный блок */
-    .for_textarea {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: auto;
-      min-height: 40px;
-      /* z-index: -999; */
-      /* visibility: hidden; */
-    }
+    /* .textarea {
+      resize: none;
+    } */
   </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-
-      // получаем поле ввода и вспомогательный блок
-      var 
-        textarea = document.querySelector("textarea"),
-        block = document.querySelector(".for_textarea");
-
-        // при нажатии на клавишу
-        textarea.addEventListener("input", function() {
-
-          // получаем значение поля ввода
-          var val_text = textarea.value;
-
-          // c помощью регулярных выражений заменм некоторые символы
-          val_text = val_text.replace(/ /g, "&nbsp;");
-          val_text = val_text.replace(/<|>/g, "_");
-          val_text = val_text.replace(/\n/g, "<br>");
-          val_text = val_text.replace(/\r/g, "<br>");
-
-          // полученное выражение добавим в вспомогательный блок
-          block.innerHTML = val_text;
-
-          // получаем высоту вспомогательного блока
-          height_textarea = block.offsetHeight;
-          
-          // задаем высоту для текстового поля
-          textarea.style.height = height_textarea + "px";
-        })
-    })
-  </script>
 </head>
+
 <body>
-  <form action="#">
-    <textarea name="message" id="message"></textarea>
-<!--     скрываем вспомогательный блок от читалок -->
-    <div class="for_textarea" aria-hidden="true"></div>
-    <button>отправить</button>
-  </form>
+<form action="#" method="get">
+
+  <label for="message">Панграмма</label>
+
+  <textarea name="message" class="textarea" id="message">Подъём с затонувшего эсминца легкобьющейся древнегреческой амфоры сопряжён с техническими трудностями.</textarea>
+
+  <button type="submit">Отправить</button>
+
+</form>
+
+  <script>
+    function sizeTextArea(elem) {
+      console.log(elem);
+      const textarea = document.createElement('div');
+      textarea.setAttribute('contenteditable', true);
+      textarea.role = 'textbox';
+      if (elem.id)
+        textarea.id = elem.id;
+      textarea.setAttribute('class', elem.getAttribute('class'));
+      textarea.innerText = elem.value;
+
+      document.querySelector('form').append(textarea)
+    }
+
+    const textareas = document.querySelectorAll('.textarea');
+
+    for (let i = 0; i < textareas.length; i++) {
+      sizeTextArea(textareas[i]);
+    }
+  </script>
 </body>
+
 </html>
