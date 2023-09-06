@@ -7,65 +7,96 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    body {
-      color: tomato;
+    :root {
+      --transition-duration: 250ms;
+      --transition-function: ease-in-out;
     }
 
-.textarea {
-  padding: 2px;
-  font-family: monospace;
-  color: fieldtext;
-  display: inline-block;
-  overflow-wrap: break-word;
-  background-color: field;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(133, 133, 133);
-  width: 12.616em;
-  min-height: 2.339em;
-}
+    .textarea {
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 100%;
+      font-weight: 700;
+      font-family: inherit;
+      color: inherit;
+      letter-spacing: -0.01em;
+      border: 1px solid rgba(10, 5, 30, 0.2);
+      border-radius: 8px;
+      transition: border var(--transition-duration) var(--transition-function);
+      min-height: 78px;
+      padding: 25px 32px;
+      font-size: 20px;
+      line-height: 26px;
+      height: auto;
+      margin-bottom: 20px;
+    }
 
-textarea {
-  max-width: 100%;
-  min-width: 170px;
-  max-height: 100px;
-}
+    .textarea:hover {
+      border-color: #09A5F0;
+    }
 
-    /* .textarea {
-      resize: none;
-    } */
+    .textarea:focus {
+      border-color: #09A5F0;
+      outline: none;
+    }
+
+    .button {
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 1px solid #09A5F0;
+      border-radius: 8px;
+      transition: box-shadow var(--transition-duration) var(--transition-function);
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      color: #ffffff;
+      background-color: #09A5F0;
+      box-shadow: 0px 8px 40px #09A5F0;
+      padding: 25px 40px;
+      font-size: 20px;
+      line-height: 26px;
+    }
+
+    .button:hover {
+      box-shadow: 0 0 0 transparent;
+    }
   </style>
 </head>
 
 <body>
-<form action="#" method="get">
+  <form action="#" method="get">
 
-  <label for="message">Панграмма</label>
+    <label for="message">Сообщение</label>
 
-  <textarea name="message" class="textarea" id="message">Подъём с затонувшего эсминца легкобьющейся древнегреческой амфоры сопряжён с техническими трудностями.</textarea>
+    <textarea name="message" class="textarea textarea-1"
+      id="message">Подъём с затонувшего эсминца легкобьющейся древнегреческой амфоры сопряжён с техническими трудностями.</textarea>
 
-  <button type="submit">Отправить</button>
+    <button type="submit" class="button">Отправить</button>
 
-</form>
+  </form>
 
   <script>
-    function sizeTextArea(elem) {
-      console.log(elem);
-      const textarea = document.createElement('div');
-      textarea.setAttribute('contenteditable', true);
-      textarea.role = 'textbox';
-      if (elem.id)
-        textarea.id = elem.id;
-      textarea.setAttribute('class', elem.getAttribute('class'));
-      textarea.innerText = elem.value;
+    function customTextarea(elem) {
+      const textareaView = document.createElement('div');
+      textareaView.setAttribute('contenteditable', true);
+      textareaView.role = 'textbox';
+      textareaView.classList = elem.classList;
+      // textareaView.innerText = elem.value;
 
-      document.querySelector('form').append(textarea)
+      elem.after(textareaView);
+
+      textareaView.addEventListener('input', () => {
+        console.log(this);
+        elem.value = textareaView.innerText;
+      });
+
+      elem.style.display = 'none';
     }
 
     const textareas = document.querySelectorAll('.textarea');
 
     for (let i = 0; i < textareas.length; i++) {
-      sizeTextArea(textareas[i]);
+      customTextarea(textareas[i]);
     }
   </script>
 </body>
